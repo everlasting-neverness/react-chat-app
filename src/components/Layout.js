@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import { USER_CONNECTED, LOGOUT } from '../Events';
 
 import LoginForm from './LoginForm';
+import ChatContainer from './chats/ChatContainer';
 
 function Layout(props) {
     const { title } = props;
@@ -32,12 +33,16 @@ function Layout(props) {
 
     return (
         <div className='container'>
-            <LoginForm
-                socket={socket}
-                setUser={setUser}
-                name={name}
-                setUserName={setUserName}
-            />
+            {!user ? (
+                <LoginForm
+                    socket={socket}
+                    setUser={setUser}
+                    name={name}
+                    setUserName={setUserName}
+                />
+            ) : (
+                <ChatContainer socket={socket} user={user} logout={logout} />
+            )}
         </div>
     );
 }
