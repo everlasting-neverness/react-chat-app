@@ -5,7 +5,6 @@ import { VERIFY_USER } from '../Events';
 function LoginForm(props) {
     const { socket, setUser, name, setUserName } = props;
 
-    const [textInput, setTextInput] = useState('');
     const [error, setError] = useState('');
 
     const setUserHandler = ({ user, isUser }) => {
@@ -13,8 +12,8 @@ function LoginForm(props) {
             setError('Username is already taken');
             return false;
         }
-        setUser(user);
         setError('');
+        setUser(user);
     };
 
     const handleSubmit = e => {
@@ -34,9 +33,7 @@ function LoginForm(props) {
                     <input
                         type='text'
                         id='name'
-                        ref={input => setTextInput(textInput)}
                         value={name}
-                        className=''
                         onChange={handleChange}
                         placeholder={'Default Nickname'}
                     />

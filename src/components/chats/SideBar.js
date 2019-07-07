@@ -24,7 +24,7 @@ function SideBar(props) {
             <div
                 className='users'
                 onClick={e => {
-
+                    
                 }}
             >
                 {chats.map(chat => {

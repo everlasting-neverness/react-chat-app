@@ -19,20 +19,20 @@ function ChatContainer(props) {
     const [activeChat, setActiveChat] = useState(null);
 
     const addMessageToChat = chatId => message => {
-        debugger
-        let newChats = chats.map(chat => {
+        debugger;
+        const chatMapFunc = chat => {
             if (chat.id === chatId) {
                 chat.messages.push(message);
             }
             return chat;
-        });
+        };
+        let newChats = chats.length ? chats.map(chatId) : [message];
         updateChats(newChats);
     };
 
     const updateTypingInChat = chatId => {};
 
     const addChat = (chat, reset) => {
-        debugger
         const newChats = reset ? [chat] : [...chats, chat];
         updateChats(newChats);
 
@@ -44,8 +44,7 @@ function ChatContainer(props) {
     };
 
     const resetChat = chat => {
-        debugger
-        addChat(chat, true)
+        addChat(chat, true);
     };
 
     const sendMessage = (chatId, message) => {
@@ -57,7 +56,6 @@ function ChatContainer(props) {
     };
 
     const initChat = () => {
-        debugger;
         socket.emit(COMMUNITY_CHAT, resetChat);
     };
 
@@ -72,19 +70,23 @@ function ChatContainer(props) {
                 activeChat={activeChat}
                 setActiveChat={setActiveChat}
             />
-            <div className='chat-container'>
+            <div className='chat-room-container'>
                 {activeChat !== null ? (
                     <div className='chat-room'>
-                        <ChatHeading name={activeChat.name} />
+                        <ChatHeading
+                            name={activeChat.name}
+                            numberOfUsers={activeChat.users.length}
+                        />
                         <Messages
                             messages={activeChat.messages}
                             user={user}
                             typingUsers={activeChat.typingUsers}
                         />
                         <MessageInput
-                            sendMessage={message =>
-                                sendMessage(activeChat.id, message)
-                            }
+                            sendMessage={message => {
+                                debugger;
+                                sendMessage(activeChat.id, message);
+                            }}
                             sendTyping={isTyping =>
                                 sendTyping(activeChat.id, isTyping)
                             }
