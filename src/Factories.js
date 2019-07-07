@@ -33,5 +33,5 @@ const getTime = (date) => (
 module.exports = {
     createUser,
     createMessage,
-    createUser
+    createChat
 };
