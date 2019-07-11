@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 
 function Messages({ messages, user, typingUsers }) {
+    
+    let container = React.createRef();
+
+    const scrollDown = () => {
+        container.scrollTop = container.scrollHeight;
+    }
+
+    useEffect(() => scrollDown(), []);
+
     return (
         <div
-            // ref='container'
+            ref={el => { container = el }}
             className="thread-container"
         >
             <div className="thread">

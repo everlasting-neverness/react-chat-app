@@ -13,12 +13,12 @@ import Messages from '../messages/Messages';
 import MessageInput from '../messages/MessageInput';
 
 function ChatContainer(props) {
-    const { socket, user, logout } = props;
+    const { socket, user, logout, title } = props;
 
-    const [chats, updateChats] = useState([]);
+    const [chats, setChats] = useState([]);
     const [activeChat, setActiveChat] = useState(null);
 
-    const addMessageToChat = chatId => message => {
+    const addMessageToChat = (chats, chatId) => message => {
         debugger;
         const chatMapFunc = chat => {
             if (chat.id === chatId) {
@@ -26,24 +26,26 @@ function ChatContainer(props) {
             }
             return chat;
         };
-        let newChats = chats.length ? chats.map(chatId) : [message];
-        updateChats(newChats);
+        let newChats = chats.length ? chats.map(chatMapFunc) : [];
+        setChats(newChats);
     };
 
     const updateTypingInChat = chatId => {};
 
     const addChat = (chat, reset) => {
         const newChats = reset ? [chat] : [...chats, chat];
-        updateChats(newChats);
+        debugger
+        setChats(newChats);
 
         const messageEvent = `${MESSAGE_RECEIVED}-${chat.id}`;
         const typingEvent = `${TYPING}-${chat.id}`;
 
         socket.on(typingEvent);
-        socket.on(messageEvent, addMessageToChat(chat.id));
+        socket.on(messageEvent, addMessageToChat(chats, chat.id));
     };
 
     const resetChat = chat => {
+        chat.users.push(user.name);
         addChat(chat, true);
     };
 
@@ -60,10 +62,12 @@ function ChatContainer(props) {
     };
 
     useEffect(() => initChat(), []);
+    // useEffect(() => initChat());
 
     return (
         <div className='container'>
             <SideBar
+                title={title}
                 logout={logout}
                 chats={chats}
                 user={user}

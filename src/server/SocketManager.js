@@ -63,7 +63,8 @@ module.exports = function(socket) {
 };
 
 const addUser = (userList, user) => {
-    return [...userList, user];
+    userList.push(user);
+    return userList;
 };
 
 const removeUser = (userList, username) => {

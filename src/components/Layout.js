@@ -41,7 +41,12 @@ function Layout(props) {
                     setUserName={setUserName}
                 />
             ) : (
-                <ChatContainer socket={socket} user={user} logout={logout} />
+                <ChatContainer
+                    socket={socket}
+                    user={user}
+                    logout={logout}
+                    title={title}
+                />
             )}
         </div>
     );

@@ -3,12 +3,12 @@ import { FaChevronDown, FaListUl, FaSearch } from 'react-icons/fa';
 import { MdEject } from 'react-icons/md';
 
 function SideBar(props) {
-    const { logout, chats, user, activeChat, setActiveChat } = props;
+    const { title, logout, chats, user, activeChat, setActiveChat } = props;
     return (
         <div id='side-bar'>
             <div className='heading'>
                 <div className='app-name'>
-                    Our Cool Chat <FaChevronDown />
+                    {title} <FaChevronDown />
                 </div>
                 <div className='menu'>
                     <FaListUl />
@@ -31,8 +31,8 @@ function SideBar(props) {
                     if (chat.name) {
                         const lastMessage =
                             chat.messages[chat.messages.length - 1];
-                        const user = chat.users.find(({ name }) => {
-                            return name !== this.props.name;
+                        const currentUser = chat.users.find(({ name }) => {
+                            return name !== user.name;
                         }) || { name: 'Community' };
                         const classNames =
                             activeChat && activeChat.id === chat.id
