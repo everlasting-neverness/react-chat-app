@@ -11,7 +11,6 @@ function Layout(props) {
 
     const [socket, setSocket] = useState(null);
     const [user, setUserToState] = useState(null);
-    const [name, setUserName] = useState('');
 
     const initSocket = () => {
         const socket = io('http://localhost:4037');
@@ -34,12 +33,7 @@ function Layout(props) {
     return (
         <div className='container'>
             {!user ? (
-                <LoginForm
-                    socket={socket}
-                    setUser={setUser}
-                    name={name}
-                    setUserName={setUserName}
-                />
+                <LoginForm socket={socket} setUser={setUser} />
             ) : (
                 <ChatContainer
                     socket={socket}

@@ -57,9 +57,9 @@ module.exports = function(socket) {
         callback(communityChat);
     });
 
-    socket.on(MESSAGE_SENT, ({chatId, message}) => {
+    socket.on(MESSAGE_SENT, ({ chatId, message }) => {
         sendMessageToChatFromUser(chatId, message);
-    })
+    });
 };
 
 const addUser = (userList, user) => {
@@ -81,17 +81,17 @@ const isUser = (userList, username) => {
     return userList.filter(user => user.name === username).length;
 };
 
-const handleUserDeparture = (socket) => {
+const handleUserDeparture = socket => {
     connectedUsers = removeUser(connectedUsers, socket.user.name);
     io.emit(USER_DISCONNECTED, connectedUsers);
-}
+};
 
 const sendTypingToChat = user => (chatId, isTyping) => {
     io.emit(`${TYPING}-${chatId}`, { user, isTyping });
 };
 
 const sendMessageToChat = sender => (chatId, message) => {
-    console.log(sender, chatId, message)
+    console.log(sender, chatId, message);
     io.emit(
         `${MESSAGE_RECEIVED}-${chatId}`,
         createMessage({ message, sender })

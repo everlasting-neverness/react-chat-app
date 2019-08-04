@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { VERIFY_USER } from '../Events';
 
 function LoginForm(props) {
-    const { socket, setUser, name, setUserName } = props;
+    const { socket, setUser } = props;
 
+    const [name, setUserName] = useState('');
     const [error, setError] = useState('');
 
     const setUserHandler = ({ user, isUser }) => {
